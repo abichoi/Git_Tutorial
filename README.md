@@ -18,14 +18,14 @@ youremail@domain.com
 ```
 
 ## Fork the repo
-Go to GitHUb and fork this repo https://github.com/abichoi/Git_Tutorial.git
+Go to GitHub and fork this repo https://github.com/abichoi/Git_Tutorial.git
 
 ## Clone a repo (HTTPS)
 ```bash
 git clone <your-forked-repo-url>
 
 # or specify destination path
-git clone <your-forked-repo-url> <an/empty/destination/foldr/path>
+git clone <your-forked-repo-url> <an/empty/destination/folder/path>
 
 ```
 
@@ -43,9 +43,9 @@ ssh-add ~/.ssh/id_rsa #change the address to where your ssh key is
 ```
 
 ### Add SSH key to yuor GitHub
-1. Go to your GitHub setting page
+1. Go to your GitHub settings page
 2. Under SSH and GPG keys session, click on New SSH key
-3. Copy your public key from your id_rsa.pub file and paste it on to Github and SAVE it.
+3. Copy your public key from your id_rsa.pub file and paste it onto GitHub and SAVE it.
 
 ### Clone repo using SSH
 ```bash
@@ -88,7 +88,7 @@ git merge new_branch_name
 git push
 ```
 ### If conflicts happen
-1. Edit the confliced files and edit them
+1. Edit the conflicted files.
 2. Then:
 ```bash
 git add <conflicted-file>
@@ -97,9 +97,9 @@ git push
 ```
 
 ## Rebase my branch onto main safely
-This takes th commits that exsit on new_branch_name but not on main, and put them on top of the main. 
+This takes the commits that exist on new_branch_name but not on main, and puts them on top of the main. 
 
-Let's say the orginal state of the repo is like this:
+Let's say the original state of the repo is like this:
 
 ```
 main: A---B---C
@@ -124,7 +124,7 @@ new_branch:           D'---E'
 git checkout new_branch_name
 git rebase main # you should see code.py being added to your branch
 
-## If conflicts happen, edit the confliced files, then:
+## If conflicts happen, edit the conflicted files, then:
 git add <fixed-file>
 git rebase --continue
 ## If you need to back out:
@@ -147,14 +147,14 @@ git push -u origin new_branch_name
 # Create a gitignore file
 touch .gitignore
 
-# Create a example file to ignore
+# Create an example file to ignore
 touch secret.py
 ```
-Then, open .gitignore in an editor you prefer and add the following into .gitignore
+Then, open .gitignore in an editor you prefer and add the following to .gitignore
 
 ```bash
 secret.py
-# if you want git to ignore a folder you can add
+# if you want git to ignore a folder, you can add
 secret_folder/
 ```
 
@@ -168,7 +168,7 @@ git commit -m "upload gitignore and copy 2"
 git reset moves your branch's HEAD, and possibly updates the stage (index) and working tree.
 Example:
 ```bash
-# Uncommit but keep changes staged (i.e. your changes won't be lost and is ready to be commited again)
+# Uncommit but keep changes staged (i.e. your changes won't be lost and are ready to be committed again)
 git reset --soft HEAD~1
 ```
 ### git restore -- Safely undo changes to files
@@ -204,7 +204,7 @@ cp -R README.md README_Copy4.md
 git add .
 git commit -m "Add copy 4"
 git push main
-# Switch back to original branch
+# Switch back to the original branch
 git checkout new_branch_name
 # Retrieve your stashed changes
 git stash pop
@@ -216,7 +216,7 @@ git push
 ```bash
 # List all the commits made in the repo
 git log # type 'q' to exit the current screen
-# List all the commits and show the difference introducted in each commit in a specific file
+# List all the commits and show the difference introduced in each commit in a specific file
 git log -p path/to/file
 # Show the most recent commit on the current branch
 git show
@@ -234,15 +234,15 @@ git tag
 git tag -a v0.1 -m "Tutorial"
 # Show the tag data
 git show v0.1
-# By default, git push command doesn't transfer tags to GitHub. You have to specificly push the tags to Github by:
+# By default, the git push command doesn't transfer tags to GitHub. You have to specificly push the tags to Github by:
 git push origin v0.1
 #or use --tags if you have a lot of tags to push all at once
 git push origin --tags
 ```
 
 ## Submodule vs Subtree
-Submodule links two repo and subtree merge two repo.
-Git submodule lets you to include a submodule within your repo, where the submodule is a refernece to a specific commit in another repo.
+Submodule links two repos and subtree merges two repos.
+Git submodule lets you include a submodule within your repo, where the submodule is a reference to a specific commit in another repo.
 Git Subtree lets you include a subdirectory within another repo, while still being able to push and pull changes to and from the subtree's repository. 
 
 ### Fork the sub repo
@@ -257,7 +257,7 @@ git submodule add <submodule-repo-url><path-the directory-where-the-submodule sh
 # initialise and fetch the submodule
 git submodule update --init
 ```
-If you want to clone a repo with submodule:
+If you want to clone a repo with a submodule:
 ```bash
 git clone --recurse-submodules <repository-url>
 ```
@@ -275,12 +275,12 @@ Git Subtree is used to include a repo as a subdirectory within another repo.
 
 ```bash
 git switch new_branch_name
-# a tree cannot be added if there are uncommited changes
+# A tree cannot be added if there are uncommitted changes
 git add .
 git commit -m "commit changes before subtree pull"
-# Add a subtree to parent repository
+# Add a subtree to the parent repository
 git remote add remote-name <path/of/cloned/sub/repo>
-# Clone your cloned sub repo into subtreeDirectory folder
+# Clone your cloned sub repo into the subtreeDirectory folder
 git subtree add --prefix=subtreeDirectory <path/of/cloned/sub/repo> main --squash
 
 # Pull changes from the subtree repo to subtreeDirectory
