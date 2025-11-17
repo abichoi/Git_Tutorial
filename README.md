@@ -17,12 +17,15 @@ Your Name
 youremail@domain.com
 ```
 
+## Fork the repo
+Go to GitHUb and fork this repo https://github.com/abichoi/Git_Tutorial.git
+
 ## Clone a repo (HTTPS)
 ```bash
-git clone https://github.com/abichoi/Git_Tutorial.git
+git clone <your-forked-repo-url>
 
 # or specify destination path
-git clone https://github.com/abichoi/Git_Tutorial.git <an/empty/destination/foldr/path>
+git clone <your-forked-repo-url> <an/empty/destination/foldr/path>
 
 ```
 
@@ -53,9 +56,9 @@ git clone git@github.com:Dkaka/COMP0219_Tutorials.git
 #cd to where your repo is cloned to
 cd <path/of/cloned/repo>
 git status
-git add path/to/file            
-git add -p                      
-git commit -m "feat: add readme file"
+touch code.py
+git add <path/to/code.py>     
+git commit -m "add code file"
 git push
 ```
 
@@ -63,20 +66,20 @@ git push
 ```bash
 # create a new branch (change new_branch_name to your desired name)
 git checkout -b new_branch_name
-#switch to your new branch
-git switch new_branch_name
 #push the new branch to the repo
 git push origin new_branch_name
+#switch back to your main branch
+git switch main
 ```
 
 ## Merge and resolve a simple conflict
 ```bash
+# switch to branch
+git switch new_branch_name
 # To create a change in the new branch, we will duplicate the readme file
-cp -R README.md README_Copy2.md
-git add READ_Copy2.md
-git commit -m "add read me copy 2"
-# This command ensures that your branch can only be updated when the changes can be applied as a fast-forward (ff). If ff is not possible, the command will fail.
-git pull --ff-only
+cp -R README.md README_Copy1.md
+git add README_Copy1.md
+git commit -m "add read me copy 1"
 
 git switch main
 git merge new_branch_name
@@ -119,7 +122,7 @@ new_branch:           D'---E'
 
 ```bash
 git checkout new_branch_name
-git rebase main
+git rebase main # you should see code.py being added to your branch
 
 ## If conflicts happen, edit the confliced files, then:
 git add <fixed-file>
@@ -136,8 +139,8 @@ git push --force-with-lease
 git push -u origin new_branch_name
 ```
 2. Open a Pull/Merge Request in the "Pull requests" tab in the repo by clicking the "Create Pull Request" button
-3. Select which branch you want to pull from and to
-4. Filled in everything and click "Create pull request"
+3. Select your main branch as the base branch and new_branch_name as the compare branch
+4. Click "Create pull request"
 
 ## Use .gitignore effectively
 ```bash
@@ -153,6 +156,11 @@ Then, open .gitignore in an editor you prefer and add the following into .gitign
 secret.py
 # if you want git to ignore a folder you can add
 secret_folder/
+```
+
+```bash
+git add .
+git commit -m "upload gitignore and copy 2"
 ```
 
 ## Undo safely (revert, not reset --hard on shared history)
@@ -185,21 +193,22 @@ git stash is used to save changes that are not ready to be committed
 ```bash
 # Add your changes to the current branch 
 git switch new_branch_name
+cp -R README.md README_Copy3.md
 git add .
 # Stash your changes
 git stash
 # Switch to another branch (we use the main branch here)
 git checkout main
 # Edit the main branch by duplicating a file and commit the edit
-cp -R README.md README_Copy7.md
+cp -R README.md README_Copy4.md
 git add .
-git commit -m "Fix the bug in main"
+git commit -m "Add copy 4"
 git push main
 # Switch back to original branch
 git checkout new_branch_name
 # Retrieve your stashed changes
 git stash pop
-git commit -m "add copy 6"
+git commit -m "add copy 3"
 git push 
 ```
 
@@ -236,10 +245,14 @@ Submodule links two repo and subtree merge two repo.
 Git submodule lets you to include a submodule within your repo, where the submodule is a refernece to a specific commit in another repo.
 Git Subtree lets you include a subdirectory within another repo, while still being able to push and pull changes to and from the subtree's repository. 
 
+### Fork the sub repo
+https://github.com/abichoi/Git_Tutorial_sub_repo.git
+
 ### Handle submodules
 A git submodule is a repo embedded inside another repo. 
 ```bash
 # Add the submodule
+git switch main
 git submodule add <submodule-repo-url><path-the directory-where-the-submodule should-be-added>
 # initialise and fetch the submodule
 git submodule update --init
@@ -261,13 +274,17 @@ git commit -m "Changed submodule content"
 Git Subtree is used to include a repo as a subdirectory within another repo.
 
 ```bash
+git switch new_branch_name
+# a tree cannot be added if there are uncommited changes
+git add .
+git commit -m "commit changes before subtree pull"
 # Add a subtree to parent repository
-git remote add remote-name https://github.com/abichoi/Git_Tutorial_sub_repo.git
-# Clone https://github.com/abichoi/Git_Tutorial_sub_repo.git into subtreeDirectory folder
-git subtree add --prefix=subtreeDirectory https://github.com/abichoi/Git_Tutorial_sub_repo.git main --squash
+git remote add remote-name <path/of/cloned/sub/repo>
+# Clone your cloned sub repo into subtreeDirectory folder
+git subtree add --prefix=subtreeDirectory <path/of/cloned/sub/repo> main --squash
 
 # Pull changes from the subtree repo to subtreeDirectory
-git subtree pull --prefix subtreeDirectory https://github.com/abichoi/Git_Tutorial_sub_repo.git master --squash
+git subtree pull --prefix subtreeDirectory <path/of/cloned/sub/repo> master --squash
 # Push changes from the subtreeDirectory to the subtree repo
-git subtree push --prefix subtreeDirectory https://github.com/abichoi/Git_Tutorial_sub_repo.git master
+git subtree push --prefix subtreeDirectory <path/of/cloned/sub/repo> master
 ```
